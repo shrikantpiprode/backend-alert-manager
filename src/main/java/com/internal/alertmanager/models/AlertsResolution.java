@@ -19,6 +19,7 @@ public class AlertsResolution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String alertID;
+    private String errorDesc;
     private String resolution;
     private String team;
     private String contact;

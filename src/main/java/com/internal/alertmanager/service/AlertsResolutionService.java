@@ -39,6 +39,7 @@ public class AlertsResolutionService {
             // Update the fields of the existingAlertsResolution with the values from updatedAlertsResolution
             // Assuming you have appropriate setters in the AlertsResolution class
             existingAlertsResolution.setAlertID(updatedAlertsResolution.getAlertID());
+            existingAlertsResolution.setErrorDesc(updatedAlertsResolution.getErrorDesc());
             existingAlertsResolution.setResolution(updatedAlertsResolution.getResolution());
             existingAlertsResolution.setTeam(updatedAlertsResolution.getTeam());
             existingAlertsResolution.setContact(updatedAlertsResolution.getContact());
