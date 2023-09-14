@@ -17,12 +17,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Alerts {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String alertID;
     private String createdtime;
     private String env;
     private int count;
-    private boolean active;
+    private String active;
     private String severity;
     
     // Constructors, getters, setters, and other methods

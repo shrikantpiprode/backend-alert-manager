@@ -64,7 +64,7 @@ public class AlertsService {
             existingAlerts.setCreatedtime(updatedAlerts.getCreatedtime());
             existingAlerts.setEnv(updatedAlerts.getEnv());
             existingAlerts.setCount(updatedAlerts.getCount());
-            existingAlerts.setActive(updatedAlerts.isActive());
+            existingAlerts.setActive(updatedAlerts.getActive());
             existingAlerts.setSeverity(updatedAlerts.getSeverity());
             // Save the updated Alerts
             return alertsRepository.save(existingAlerts);
