@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS alerts (
     createdtime VARCHAR(255) NOT NULL,
     env VARCHAR(255) NOT NULL,
     count INT NOT NULL,
-    active BOOLEAN NOT NULL,
+    active VARCHAR(255) NOT NULL,
     severity VARCHAR(255) NOT NULL
 );
 

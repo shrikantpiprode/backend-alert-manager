@@ -7,6 +7,7 @@ import com.internal.alertmanager.service.AlertsService;
 import com.internal.alertmanager.service.TableViewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +43,14 @@ public class AlertsController {
         return alertsService.updateAlertsRequestFromGrap(alertRequest);
     }
 
+    @PutMapping("/updateFEAlert")
+    public Alerts updateAlerts(@RequestBody Alerts alert) {
+        return alertsService.updateAlerts(alert.getId(),alert);
+    }
+
     
     @GetMapping("/get-data")
+    @CacheEvict(value = "tableViewDataCache", allEntries = true)
     public TableView getTableViewData() {
         return tableViewService.getData();
     }
