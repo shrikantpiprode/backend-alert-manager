@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +18,25 @@ public class NotificationController {
     @Autowired
     NotificationService notificationService;
 
-    @PostMapping("/jira/{summary}")
+  /*   @PostMapping("/jira/{summary}")
     public String createJiraNotification(@PathVariable String summary) throws URISyntaxException {
         ResponseEntity responseEntity = notificationService.createJiraNotification(summary);
-        return responseEntity.getBody().toString();
-    }
+         return responseEntity.getBody().toString();
+    } */
 
+     @PostMapping("/jira")
+    public String createJiraNotification(@RequestBody String summary) {
+   
+        try {
+         String status=   notificationService.createJiraNotification(summary);
+         return status;
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+         return null;
+    }
 }
+
+
+

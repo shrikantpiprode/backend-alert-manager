@@ -26,7 +26,7 @@ public class NotificationService {
     RestTemplate restTemplate;
     Logger logger = LoggerFactory.getLogger(NotificationService.class);
     private final String JIRA_API_URI = "https://criticalissues.atlassian.net/rest/api/2/issue/";
-    public ResponseEntity createJiraNotification(String summaryStr) throws URISyntaxException {
+    public String createJiraNotification(String summaryStr) throws URISyntaxException {
         //Integrate with JIRA APIs
 
         HttpHeaders headers = new HttpHeaders();
@@ -38,7 +38,7 @@ public class NotificationService {
         URI uri = new URI(JIRA_API_URI);
         ResponseEntity responseEntity = restTemplate.postForEntity(uri,entity,String.class);
         logger.info("responseStr --- "+responseEntity);
-        return responseEntity;
+        return "SUCCESS";
     }
 
     private Jira prepareJira(String summaryStr){

@@ -3,9 +3,12 @@ package com.internal.alertmanager.service;
 import com.internal.alertmanager.models.AlertRequest;
 import com.internal.alertmanager.models.Alerts;
 import com.internal.alertmanager.repository.AlertsRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,12 +16,17 @@ import java.util.Optional;
 public class AlertsService {
 
     @Autowired
-    private  AlertsRepository alertsRepository;
-
-   
+    private AlertsRepository alertsRepository;
 
     // Create a new Alerts entry
     public Alerts createAlerts(Alerts newAlerts) {
+        if (newAlerts.getCreatedtime() == null || newAlerts.getCreatedtime().isEmpty()) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            newAlerts.setCreatedtime(dateFormat.format(new Date()));
+        }
+         if (newAlerts.getSeverity() == null || newAlerts.getSeverity().isEmpty()) {
+            newAlerts.setSeverity("CRITICAL");
+        }
         return alertsRepository.save(newAlerts);
     }
 
@@ -32,7 +40,7 @@ public class AlertsService {
         return alertsRepository.findById(id);
     }
 
-      // Update an existing Alerts entry
+    // Update an existing Alerts entry
     public Alerts updateAlertsRequestFromGrap(AlertRequest alertRequest) {
 
         // Find the Alerts entity by alertId
@@ -41,7 +49,7 @@ public class AlertsService {
         if (existingAlert != null) {
             // Update the timeStamp
             existingAlert.setCreatedtime(alertRequest.getTimeStamp());
-            existingAlert.setCount(existingAlert.getCount() +1);
+            existingAlert.setCount(existingAlert.getCount() + 1);
 
             // Save the updated entity
             return alertsRepository.save(existingAlert);
