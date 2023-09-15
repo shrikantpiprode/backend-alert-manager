@@ -31,7 +31,7 @@ public class NotificationService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setBasicAuth("shiveshyadav@gmail.com","ATATT3xFfGF0YxwECi83gLuzyMbWos-uwy8KMozTqAXmxeEKhXEIIkTYBS1RgZVKQP0DuA23pmux5le639ibyGG2PCC3KHSC2aC6BN4Y9UYXVrLSvgK9cBK0sGwb499qv_gpQgl_qDq7Ix9tbWMfCZet_y7tVDqp_SDGOpvZRmaH28L0XxPnZck=E16726BF");
+        headers.setBasicAuth("shiveshyadav@gmail.com","ATATT3xFfGF0euFpaDSHzeziVdQtXylwaQHurnUvrAJu3PXUyE-w5X3KYlip91-95loGq4ocpTRWOXVIz6hpMGQKpYpcWBstcHWYuI1CJwuMj3ygE5oPuKQXPpTTOFu-Umf5MJnE5T_MB8CdqV0J1GAc9IxkLcdKIaB7QZDL9_zfneD8dEJt3ys=FC578379");
 
         HttpEntity<Jira> entity = new HttpEntity<Jira>(prepareJira(summaryStr),headers);
 
