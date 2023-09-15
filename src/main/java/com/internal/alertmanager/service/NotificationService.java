@@ -9,6 +9,12 @@ import com.internal.alertmanager.models.jira.Project;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Base64;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +34,19 @@ public class NotificationService {
     private final String JIRA_API_URI = "https://criticalissues.atlassian.net/rest/api/2/issue/";
     public String createJiraNotification(String summaryStr) throws URISyntaxException {
         //Integrate with JIRA APIs
-
+        String encypPassword= "hO0jQo7xtdUsCPYili/pqbYsQFgvIGzfwW5HulSGDMOyLNDbBBB/aiZwXds/tFiH/8mNqSQVDWU6AIXJUIyRpDq0L+uTxJyvFgxQq4gRcHmJRa4S8AMYOaUC/0VTRFZbbx9Rr0EPBOhWesW3WRKl9DJTkIcQf7dBo74yMLTSRP4op7EdQQGmngYzXsa3uRB+9vMzZLASP7AZbcUDhFWcAueBc/ALH9vE2SulQNyqsTxQNafQwDm2Eg5EhlXYYCou8jlbI8dAKSj0lqpSd+st8A==";
+        String secretKey = "shrikantshrikantshrikant";
         HttpHeaders headers = new HttpHeaders();
+       String orginalpassword=null;
+    try {
+        orginalpassword = decrypt(encypPassword,secretKey);
+    } catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth("shiveshyadav@gmail.com",
-                "ATATT3xFfGF0MunwTdH3y7dpYtXnIBLoufMU52fWdju9didkpjiL2lwkFWgVxWX7bqaD5E_Nc_7tuUm7bPqZH9o8J2d9n_yWGMkUTcS1YUjkgxSGIMlOXpHILvGLVdWVNIPEG9acPg4R0TybPopEdvcgVLPGmGtra5Tf9n0Y5ZgavEekThc3_ho=C8062402");
+                orginalpassword);
 
         HttpEntity<Jira> entity = new HttpEntity<Jira>(prepareJira(summaryStr),headers);
 
@@ -42,6 +56,24 @@ public class NotificationService {
         return "SUCCESS";
     }
 
+     public String decrypt(String encryptedText, String secretKey) throws Exception {
+        // Create a SecretKey from the provided key bytes
+        byte[] keyBytes = secretKey.getBytes("UTF-8");
+        SecretKey key = new SecretKeySpec(keyBytes, "AES");
+
+        // Initialize the cipher for decryption
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, key);
+
+        // Decode the Base64 encoded encrypted text
+        byte[] encryptedBytes = Base64.getDecoder().decode(encryptedText);
+
+        // Decrypt the text
+        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+
+        // Convert the decrypted bytes back to a string
+        return new String(decryptedBytes, "UTF-8");
+    }
     private Jira prepareJira(String summaryStr){
         Jira  jira = new Jira();
         jira.setExpand("renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations,customfield_10010.requestTypePractice");
